@@ -1,7 +1,7 @@
-import logo from './logo.svg';
-import './App.css';
-import ReactPlayer from 'react-player'
-import { useState, useRef, useCallback, useEffect } from 'react';
+import logo from "./logo.svg";
+import "./App.css";
+import ReactPlayer from "react-player";
+import { useState, useRef, useCallback, useEffect } from "react";
 import React from "react";
 import Webcam from "react-webcam";
 
@@ -10,35 +10,46 @@ function App() {
   const [imgSrc, setImgSrc] = useState([]);
 
   const capture = useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot({ width: 280, height: 180 });
+    const imageSrc = webcamRef.current.getScreenshot({
+      width: 280,
+      height: 180,
+    });
     setImgSrc([...imgSrc, imageSrc]);
   });
 
   return (
     <div>
       <div className="d-flex justify-content-center">
-        <Webcam
-          audio={false}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-        />
+        <h1>Capture with react.js</h1>
       </div>
       <div className="d-flex justify-content-center">
-        <button type="button" className="btn btn-outline-primary" onClick={capture}>Capture photo</button>
+        <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
       </div>
-      <div className="d-flex justify-content-around">
-        <div className="d-flex flex-wrap">
-          <div className="card">
-            <div className="card-body">
-              {/* This is some text within a card body. */}
-              {imgSrc && (
-                imgSrc.map((data, index) => {
-                  return <img key={index} src={data} />
-                })
-              )}
+      <div className="container-capture">
+        <div className="d-flex justify-content-center">
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={capture}
+          >
+            Capture photo
+          </button>
+        </div>
+        <div className="data-capture">
+          <div className="d-flex justify-content-around">
+            <div className="d-flex flex-wrap">
+              <div className="card">
+                <div className="card-body">
+                  {/* This is some text within a card body. */}
+                  {imgSrc.length >= 1
+                    ? imgSrc.map((data, index) => {
+                        return <img key={index} src={data} />;
+                      })
+                    : "No Image"}
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -46,8 +57,6 @@ function App() {
 }
 
 export default App;
-
-
 
 // // https://www.npmjs.com/package/react-webcam
 
@@ -94,4 +103,3 @@ export default App;
 //     </div>
 //   );
 // }
-
